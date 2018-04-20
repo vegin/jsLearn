@@ -1,0 +1,11 @@
+.custom-photo-shadow *{padding:0;margin:0;font-family:'Microsoft YaHei',Helvetica,Arial,Verdana,sans-serif;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+.custom-photo-shadow{position:fixed;left:0;right:0;bottom:0;top:0;z-index:9999;background:#000;}
+.custom-photo-shadow .custom-photo-header{position:absolute;left:0;top:0;right:0;padding:10px;background:rgba(0,0,0,0.4);z-index:2;}
+.custom-photo-shadow .custom-photo-header ul{display:inline-block;vertical-align:middle;}
+.custom-photo-shadow .custom-photo-header ul li{display:inline-block;vertical-align:middle;font-size:12px;color:#fff;}
+.custom-photo-shadow .custom-photo-header em{float:right;font-size:30px;font-style:normal;color:#fff;margin-top:-10px;cursor:pointer;}
+.custom-photo-shadow .custom-photo-main{position:absolute;top:0;left:0;right:0;bottom:0;display:table-cell;text-align:center;overflow:hidden;}
+.custom-photo-shadow .custom-photo-main img{max-width:100%;max-height:100%;vertical-align:middle;}
+.custom-photo-shadow .cps-left,.custom-photo-shadow .cps-right{position:absolute;top:50%;width:40px;height:40px;z-index:2;margin-top:-20px;}
+.custom-photo-shadow .cps-left{left:10px;background:url(../images/arrow.png) no-repeat;background-position:0 0;}
+.custom-photo-shadow .cps-right{right:10px;background:url(../images/arrow.png) no-repeat;background-position:-40px 0;}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="jquery-1.8.2.min.js"></script>
+    <style>
+        div{height:1000px;padding-top:800px;}
+        a{position:fixed;right:10px;top:50%;display:none;}
+    </style>
+</head>
+<body>
+    <div class="long-div">
+        <p class="test">出现显示按钮</p>
+    </div>
+    <a href="#" class="btn">按钮</a>
+</body>
+</html>
+<script>
+    $(function(){
+        var _height = $(".test").offset().top;
+        $(window).scroll(function(){
+            var _scrollTop = $(document).scrollTop();
+            console.log(_scrollTop);
+            if(_scrollTop>_height ){
+                $(".btn").show();
+            }else{
+                $(".btn").hide();
+            }
+        });
+    });
+
+</script>

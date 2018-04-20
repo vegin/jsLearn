@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link type="text/css" rel="stylesheet" href="css/customPhotoShow.css" />
+    <script src="js/ECF.js"></script>
+    <script src="js/customPhotoShow.js"></script>
+    <title>Document</title>
+    <style>
+        #text img,#textPlus img{width:100px;height:100px;}
+    </style>
+</head>
+<body>
+    <div id="text">
+        <img src="images/1.jpg" />
+        <p>fase<img src="images/5.jpg" /></p>
+        <img src="images/2.jpg" />
+        <img src="images/3.jpg" />
+    </div>
+    <div id="textPlus">
+        <img src="images/4.jpg" />
+        <img src="images/5.jpg" />
+    </div>
+    <script type="text/javascript">
+        new customPhotoShow('text');
+        new customPhotoShow('textPlus');
+    </script>
+</body>
+</html>
