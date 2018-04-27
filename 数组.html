@@ -6,30 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script src="js/jquery-1.8.2.min.js"></script>
-    <style>
-        div{height:1000px;padding-top:800px;}
-        a{position:fixed;right:10px;top:50%;display:none;}
-    </style>
+    <script>
+        var arr = ['w', 'y', 'k', 'o', 'p'];
+        var eArr = arr[Symbol.iterator]();
+        console.log(eArr.next().value); // w
+        console.log(eArr.next().value); // y
+        console.log(eArr.next().value); // k
+        console.log(eArr.next().value); // o
+        console.log(eArr.next().value); // p
+        var num1 = [1,2,3],
+            num2 = [4,5,6],
+            num3 = [7,8,9];
+        var nums = num1.concat(num2,num3);
+        console.log(num1+' ---'+ nums);
+    </script>
 </head>
-<body>
-    <div class="long-div">
-        <p class="test">出现显示按钮</p>
-    </div>
-    <a href="#" class="btn">按钮</a>
+<body>    
 </body>
 </html>
-<script>
-    $(function(){
-        var _height = $(".test").offset().top;
-        $(window).scroll(function(){
-            var _scrollTop = $(document).scrollTop();
-            console.log(_scrollTop);
-            if(_scrollTop>_height ){
-                $(".btn").show();
-            }else{
-                $(".btn").hide();
-            }
-        });
-    });
-
-</script>
