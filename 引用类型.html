@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>  
+         var num = 10.5546;
+         console.log(num.toFixed(2));   //toFixed(n):保留n为小数    10.55
+         console.log(num.toExponential(2)); //toExponential(n):返回保留n为小数的指数表示法   1.06e+1
+         console.log(num.toPrecision(2));   //toPrecision(n):以最优的方式保留n位数   11    
+         var string ="hello world";
+         console.log(string.length);   //11
+         console.log(string.charAt(1)+'-------'+string.charCodeAt(1)+'------'+string[1]);   //e-------101--------e
+         var stringValue = 'Hello';
+         var result=stringValue.concat(' world','!');
+         console.log(result+'------'+stringValue);      //Hello world!---------Hello
+         /*截取字符串  均可包含两个参数  
+            slice（a,b）:截取a位置至b位置前面一位，如为负值，则将负责与字符串长度相加
+            substring(a,b) :截取a位置至b位置前面一位，如b<a，则转换为substring(b,a) ;如为负值，转化为0
+            substr(a,b) :截取a位置开始的b个值 ；如a为负值，将a加上字符串长度，如b为负值，转换为0
+            **若不设置b值，则截取到末尾
+         */
+         console.log(string.slice(3));   //lo world
+         console.log(string.substring(3));  //lo world
+         console.log(string.substr(3));   //lo world
+         console.log(string.slice(3,7));   // lo w
+         console.log(string.substring(3,7));  //lo w
+         console.log(string.substr(3,7));    //lo worl
+         console.log(string.slice(-3));   //rld
+         console.log(string.substring(-3));  //hello word
+         console.log(string.substr(-3));   //rld
+         console.log(string.slice(3,-4));   // lo w
+         console.log(string.substring(3,-4));  // hel
+         console.log(string.substr(3,-4));    // 空
+         /*位置
+            indexOf(a,b)：从b处向后搜索给定字符串的a字符串位置 
+            lastIndexOf(a,b) ：从b处向前搜索给定字符串的a字符串位置
+            找不到返回-1
+         */
+         console.log(string.indexOf('o',6));  //7
+         console.log(string.lastIndexOf('o',6));  //4
+         var moreString ="this is a perfect city-beatiful、sweety、clearn、warming、lovely";
+         var point = [];
+         var pos = moreString.indexOf('i');
+         while(pos>-1){
+             point.push(pos);
+             pos=moreString.indexOf('i',pos+1);
+         }
+         console.log(point);  //[2,5,19,27,50]
+         var string2 = "   Hello world!  ";
+         var string3 = string2.trim();    //创建一个字符串副本，删除原字符串前置和后缀的所有空格
+         console.log(string2+'------'+string3);   //   Hello world!  ------Hello world!
+         string2.toLowerCase();   
+         string2.toLocaleLowerCase();
+         string2.toUpperCase();
+         string2.toLocaleUpperCase(); 
+         /*字符串模式匹配*/
+         var text = "cat,bat,sat,fat";
+         var pattern = /.at/;
+         var matches = text.match(pattern);
+         console.log(matches.index+'-----'+matches[0]+'-----'+pattern.lastIndex);  //0-----cat-----0
+         var pos = text.search(/at/);  //search返回第一个匹配项的索引   找不到匹配项，返回-1
+         console.log(pos);    //1
+         //replace(a,b):b替换a  如a为字符串，只替换第一个匹配项  如需替换所有，a为正则表达式，且要指定全局（g）标志
+         var result = text.replace('at','ond');
+         console.log(result);   //cond,bat,sat,fat
+         var result2 = text.replace(/at/g,'ond');
+         console.log(result2);  //cond,bond,sond,fond
+         //split(a,b):按分隔符a将字符串分割为b个子字符串,a为原字符串中想要的分割位
+         var split1 = text.split(',',2);
+         console.log(split1);   //['cat','bat']
+         //a.localeCompare(b):比较两个字符串，如a>b,返回1；a=b,返回0；a<b,返回-1（大小根据在字母表前后顺序决定，地区性决定方法的返回值）
+         var stringValue = 'yellow';
+         console.log(stringValue.localeCompare('brick'));  //1
+         console.log(stringValue.localeCompare('yellow'));  //0
+         console.log(stringValue.localeCompare('zoo'));  //-1
+         //String.fromCharCode():接收一或多个字符编码，将他们转化成一个字符串
+         console.log(String.fromCharCode(104,101,108,108,111));  //hello
+    </script>
+</head>
+<body>   
+    
+</body>
+</html>
