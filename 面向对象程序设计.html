@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        var person = {name:'vegin',age:26,school:'MIT',_birth:1991,edition:1};
+        /*数据属性的四个特性*/
+        Object.defineProperty(person,'name',{
+            configurable:false,    //是否可配置（能否通过delete删除属性从而重新定义属性）
+            writable:false,        //是否可修改属性的值
+            enumerable:false,       //是否可通过for-in枚举
+            value:'Sara'            //包含这个属性的数据值
+        });
+        console.log(person.name);   //Sara
+        var array = [];
+        for(n in person){            
+            array.push(n);            
+        };
+        console.log(array);      //['age','school','_birth','edition']  (name设置为不可枚举了)
+        //设置了不可配置后，再操作会抛出错误 ，也不能再改成可配置
+        // Object.defineProperty(person,'name',{
+        //     value:'Jack'
+        // });
+
+
+        /*
+            _birth：前面的下划线是比较通用的写法  用于表示只能通过对象方法访问的属性
+            births：访问器属性
+        */
+        Object.defineProperty(person,'births',{      
+            get:function(){                             
+                return this._birth;             
+            },
+            set:function(newValue){
+                if(newValue>1991){
+                    this._birth = newValue;
+                    this.edition += newValue-1991;
+                }
+            }
+        });
+        person.births = 2018;
+        console.log(person.edition);   //28
+
+        /*  
+            同时设置多个数据属性和访问器属性
+            设置了_year、edition两个数据属性   一个year访问器属性
+        */        
+        var book={};
+        Object.defineProperties(book,{
+            _year:{
+                value:2004,
+                writable:true  
+            },
+            edition:{
+                value:1,
+                writable:true,
+            },
+            year:{
+                get:function(){
+                    return this._year;
+                },
+                set:function(newValue){
+                    if(newValue>2004){
+                        this._year=newValue;
+                        this.edition += newValue-2004;
+                    }
+                }
+            }
+        });
+        book.year=2018;
+        console.log(book.edition);   //15
+        /*读取属性的特性*/
+        var discrib = Object.getOwnPropertyDescriptor(book,'_year');
+        console.log(discrib.value+'---'+discrib.configurable+'---'+discrib.enumerable +'---'+typeof(discrib.get));   //2018---false---false---undefined
+
+        /*工厂模式*/
+        function createPerson(name,age,job){
+            var o = new Object();
+            o.name = name;
+            o.age = age;
+            o.job = job;
+            o.sayName = function(){
+                console.log(this.name);
+            };
+            return o;
+        }
+        var person1 = createPerson('Nicholas',29,"software engineer");
+        var person2 = createPerson('Greg',27,"doctor");
+        person1.sayName();   //Nicholas
+        person2.sayName();   //Greg
+
+        /*构造函数模式
+            构造函数都应该以一个大写字母开头，非构造函数应该以一个小写字母开头
+        */
+        function Person(name,age,job){
+            this.name = name;
+            this.age = age;
+            this.job = job;
+            this.sayName = function(){
+                console.log(this.name);
+            }
+        }
+        var person3 = new Person('Vegin',26,"software engineer");
+        person3.sayName();  //Vegin
+        console.log(person3.constructor == Person);   //true     constructor：构造函数
+        console.log(person3 instanceof Person);   //true     instanceof更可靠一些
+
+        /*原型模式*/
+        function Persons(){}
+        Persons.prototype.name="Sara";
+        Persons.prototype.age=26;
+        Persons.prototype.job="doctor";
+        Persons.prototype.sayName = function(){
+            console.log(this.name);
+        }
+        var person4 = new Persons();
+        person4.sayName();
+        //isPrototypeOf()：确定对象之间是否存在原型关系
+        //Object.getPrototypeOf()：ES5方法  获得原型，同样用于确定原型关系
+        console.log(Persons.prototype.isPrototypeOf(person4));           //true
+        console.log(Object.getPrototypeOf(person4)==Persons.prototype);  //true
+        console.log(Object.getPrototypeOf(person4).name);               //Sara
+        //hasOwnProperty(a)：检测属性a存在于实例中还是原型中
+        //in：检测是否存在属性 不管是实例还是原型中
+        person4.name='Vegin';
+        console.log(person4.hasOwnProperty('age'));     //false     age是存在于原型中
+        console.log(person4.hasOwnProperty('name'));    //true      name被实例重写了，原本原型中的name被覆盖   
+        console.log('name' in person4);                 //true
+        /*hasOwnProperty和in结合，（hasOwnProperty为假，in为真）就可以判断属性是否存在原型中*/
+        function hasPrototypeProperty(object,name){
+            return (!object.hasOwnProperty(name))&&(name in object);
+        }
+        console.log(hasPrototypeProperty(person4,"age"));  //true
+        //Object.keys()：接收一个对象作为参数，返回一个包含所有可枚举属性的字符串数组
+        //Object.getOwnPropertyNames()：接收一个对象作为参数，返回一个包含所有属性（无论是否可枚举）的字符串数组
+        console.log(Object.keys(Persons.prototype));   //["name", "age", "job", "sayName"]
+        console.log(Object.keys(person4));              //["name"]
+        console.log(Object.getOwnPropertyNames(Persons.prototype));  //["constructor", "name", "age", "job", "sayName"]
+        console.log(Object.getOwnPropertyNames(person4));   //["name"]  
+
+        /*简介的原型写法*/
+        function Friend(){};
+        Friend.prototype = {   //这种写法相当于重写了原型，此时重写原型的constructor指向Object,而并不是Friend
+            //constructor:Friend,  非必要   如果constructor的值很重要，则可设置，设置后会使得constructor属性从不可枚举变成可枚举；不设置会使得实例的constructor值不再指向构造函数，而是指向Object
+            name:'Jack',
+            school:'MIT',
+            job:'manager',
+            sayname:function(){
+                console.log(this.name);
+            }
+        };
+        var friend = new Friend();
+        console.log(friend.constructor == Friend);  //false
+        //如果要重写原型，constructor值要指向正确，同时还要不可枚举，可使用Object.defineProperty()重设构造函数
+        function Friends(){};
+        Friends.prototype = {             
+            name:'Jack',
+            school:'MIT',
+            job:'manager',
+            sayname:function(){
+                console.log(this.name);
+            }
+        };
+        Object.defineProperty(Friends.prototype,"constructor",{
+            enumerable:false,
+            value:Friends
+        })
+        var friends = new Friends();
+        console.log(friends.constructor == Friends);  //true
+
+        /*构造函数+原型模式  （有实例属性的副本，但同时又共享方法，最大限度地节省了内存）*/
+        function Student(name,age,sex){
+            this.name = name;
+            this.age = age;
+            this.sex = sex;
+        };
+        Student.prototype = {
+            constructor:Student,
+            sayName:function(){
+                console.log('name is:'+this.name);
+            }
+        }
+        var student1 = new Student('vegin',20,'woman');
+        var student2 = new Student('jack',20,'man');
+        console.log(student1.name+'----'+student2.name);   //vegin----jack
+
+        /*动态原型模式   （可以根据需要初始化原型，同时保持上一种模式的优点）*/
+        function Student2(name,age,sex){
+            this.name = name;
+            this.age = age;
+            this.sex = sex;
+            if(typeof this.sayName != "function"){      //如果不存在sayName这个方法，则将它添加到原型中，只有在初次调用构造函数时才能执行
+                Student2.prototype.sayName = function(){
+                    console.log(this.name);
+                }
+            }
+        }
+        var student3 = new Student2('sara',20,'woman');
+        student3.sayName();     //sara    
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
