@@ -23,7 +23,7 @@
         //设置了不可配置后，再操作会抛出错误 ，也不能再改成可配置
         // Object.defineProperty(person,'name',{
         //     value:'Jack'
-        // });
+        // });    //报错    因为name已经设置为不可配置了
 
 
         /*
@@ -117,9 +117,9 @@
             console.log(this.name);
         }
         var person4 = new Persons();
-        person4.sayName();
-        //isPrototypeOf()：确定对象之间是否存在原型关系
-        //Object.getPrototypeOf()：ES5方法  获得原型，同样用于确定原型关系
+        person4.sayName();          //Sara
+        //a.isPrototypeOf(b)：a是否是b的原型，用于确定对象之间是否存在原型关系
+        //Object.getPrototypeOf(a)：ES5方法  获得a的原型，同样用于确定原型关系
         console.log(Persons.prototype.isPrototypeOf(person4));           //true
         console.log(Object.getPrototypeOf(person4)==Persons.prototype);  //true
         console.log(Object.getPrototypeOf(person4).name);               //Sara
@@ -200,6 +200,59 @@
         }
         var student3 = new Student2('sara',20,'woman');
         student3.sayName();     //sara    
+
+
+        /*继承*/
+        //组合继承（最常用）(调用了两次超类)
+        function SuperType(name){
+            this.name = name;
+            this.colors = ['red','green','blue'];
+        }
+        SuperType.prototype.sayName = function(){
+            console.log(this.name);
+        }
+        function SubType(name,age){
+            SuperType.call(this,name);     //继承属性       第二次调用，此时SubType的属性会覆盖其原型中的属性
+            this.age = age;
+        }
+        SubType.prototype = new SuperType();    //继承方法      第一次调用，此时SubType的原型中还包含了超类的属性
+        SubType.prototype.constructor = SubType;    //确定原型关系
+        var instance1 = new SubType('Vegin',26);
+        var instance2 = new SubType('Sara',27);
+        instance1.sayName();  //Vegin
+        instance2.sayName();   //Sara
+        //原型继承
+        //Object.create(a,b) —— a:新对象原型的对象   b:(非必要)为新对象定义额外属性的对象
+        var american = {
+            name:'Nicholas',
+            friends:['Shelly','Court','Van']
+        };
+        var anotherAmerican = Object.create(american,{
+            name:{
+                value:'Greg'
+            }
+        });
+        console.log(anotherAmerican.name);  //Greg 
+        //寄生组合继承（最理想有效的）
+        function inheritPrototype(subType,superType){
+            var _prototype = Object(superType.prototype);    //复制超类原型的副本
+            _prototype.constructor = subType;
+            subType.prototype = _prototype;
+        };
+        function Classmate(name){
+            this.name = name;
+            this.colors = ['green','red','orange'];
+        };
+        Classmate.prototype.sayName = function(){
+            console.log(this.name);
+        };
+        function Anotherclassmate(name,age){
+            Classmate.call(this,name);           //继承属性
+            this.age = age;
+        };
+        inheritPrototype(Anotherclassmate,Classmate);   //继承方法，并且只有方法
+        var classmate = new Anotherclassmate('Jack',20);
+        classmate.sayName();     //Jack
     </script>
 </head>
 <body>
