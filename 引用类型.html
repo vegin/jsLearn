@@ -17,7 +17,7 @@
          var result=stringValue.concat(' world','!');
          console.log(result+'------'+stringValue);      //Hello world!---------Hello
          /*截取字符串  均可包含两个参数  
-            slice（a,b）:截取a位置至b位置前面一位，如为负值，则将负责与字符串长度相加
+            slice（a,b）:截取a位置至b位置前面一位，如为负值，则将负值与字符串长度相加
             substring(a,b) :截取a位置至b位置前面一位，如b<a，则转换为substring(b,a) ;如为负值，转化为0
             substr(a,b) :截取a位置开始的b个值 ；如a为负值，将a加上字符串长度，如b为负值，转换为0
             **若不设置b值，则截取到末尾

@@ -9,7 +9,7 @@
          function sum(num1,num2){  //函数声明
              return num1+num2;
          }
-        //  var sum = function(num1,num2){  //函数表达式
+        //  var sum = function(num1,num2){  //函数表达式     没有名字的函数表达式叫匿名函数
         //      return num1+num2;
         //  }
          function add10(num){
@@ -53,6 +53,15 @@
             };
         };
         console.log(factorial(5));      //120
+        //严格模式下，arguments.callee会导致错误，可用命名函数表达式来达到相同的效果，在严格和非严格模式都可使用
+        var factorial2 = (function f(num){
+            if(num<=1){
+                return 1;
+            }else{
+                return num*f(num-1);
+            };
+        });
+        console.log(factorial2(3));    //6
 
         //this   函数据以执行的环境对象
 
@@ -87,6 +96,52 @@
         showColor.call(o);          //blue
         var otherShowColor = showColor.bind(o);    //bind  创建一个函数的实例，其this值会被绑定到传给bind()函数的值
         otherShowColor();    //blue
+        
+        //闭包：当在函数内部定义了其他函数时，就创建了闭包。如果函数返回一个闭包，这个函数的作用域就会一直保存在内存中直到闭包不存在为止
+        //模仿块级作用域  可以减少闭包占用的内存问题，只要函数执行完毕，就可以立即销毁其作用域链
+        (function(){
+            var txt = '模仿块级作用域'
+            console.log(txt);
+        })();   
+
+        //模块模式 ：为单例创建私有变量和特权方法（有权访问私有变量和私有函数的共有方法称为特权方法）
+        var singleton = function(){
+            //私有变量和私有函数
+            var privateVariable = 10;
+            function privateFunction(){
+                console.log('模块模式私有函数');
+            }
+            //特权/共有方法和属性
+            return{
+                publicProperty:true,
+                publicMethod:function(){
+                    console.log(privateVariable++);
+                    return privateFunction();
+                }
+            }
+        }();
+        singleton.publicMethod();     //10  模块模式私有函数 
+
+        //增强的模块模式   适合单例必须是某种类型的实例，同时还必须添加某些属性和（或）方法对其加以增强的情况
+        var singletonplus = function(){
+            //私有变量和私有函数
+            var privateVariable = 10;
+            function privateFunction(){
+                console.log('增强模块模式私有函数');
+            }
+            //创建对象
+            var object = new CustomType();
+            //添加特权/公有属性和方法
+            object.publicProperty = true;
+            object.publicMethod  = function(){
+                privateVariable++;
+                return privateFunction();
+            };
+            //返回这个对象
+            return object;
+        }();
+
+        
     </script>
 </head>
 <body>   
