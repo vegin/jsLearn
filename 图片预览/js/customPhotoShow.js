@@ -1,5 +1,6 @@
 /*
-*图片查看
+ * 图片查看  
+ * By vegin
 */
 
 (function ($, win, doc) {
@@ -42,8 +43,8 @@
                             <div class="custom-photo-main" id="cpsPhoto">\
                                 <img id="cpsPhotoCurrent" src="'+_this.img[n].src+'">\
                             </div>\
-                            <div id="cpsLeft" class="cps-left"></div>\
-                            <div id="cpsRight" class="cps-right"></div>\
+                            <div id="cpsLeft" class="cps-left" style="display:'+(_this.length==1?"none":"")+';"></div>\
+                            <div id="cpsRight" class="cps-right"  style="display:'+(_this.length==1?"none":"")+';"></div>\
                         </div>';
             var _cps = doc.createElement('div');            
             _cps.setAttribute('id','cpsContainer');             
