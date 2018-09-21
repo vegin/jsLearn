@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script> 
+        var _input = document.getElementsByTagName('input');      
+        function ifBiggerThanTen(){    
+            var num = _input[0].value;        
+            if(num>10){
+                alert(++num);
+            }else{
+                alert('数字不大于10');
+            }
+        };
+        function isOdd(){
+            var num = _input[0].value;  
+            if(num%2==0){
+                alert('数字是偶数');
+            }else{
+                alert('数字是奇数');
+            }
+        };
+        function isPlus(){
+            var num = _input[0].value;  
+            if(num>0){
+                alert('数字是正数');
+            }else if(num==0){
+                alert('数字0既不是正数也不是负数');
+            }else{
+                alert('数字是负数');
+            }
+        };
+        function getAbs(){
+            var num1 = _input[1].value,
+                num2 = _input[2].value;
+            alert('两个数的绝对值是：'+ Math.abs(num1-num2));
+        };
+        function getMaxMin(){
+            var num1 = _input[3].value,
+                num2 = _input[4].value,
+                num3 = _input[5].value;
+            alert('最大值：'+Math.max(num1,num2,num3)+'；最小值：'+Math.min(num1,num2,num3));
+        };
+        function getNextTime(){
+            var hour = parseInt(_input[6].value),
+                minu = parseInt(_input[7].value),
+                sec = parseInt(_input[8].value);            
+            if(sec==59){
+                sec = 0;
+                if(minu==59){
+                    minu = 0;
+                    if(hour==23){
+                        hour = 0;
+                    }else{
+                        hour++;
+                    }
+                }else{
+                    minu++;
+                }
+            }else{
+                sec++;
+            }
+            if(hour<10){hour = '0'+hour;}
+            if(minu<10){minu = '0'+minu;}
+            if(sec<10){sec = '0'+sec;}
+            alert('下一秒的时间是：'+hour+':'+minu+':'+sec);            
+        };
+        function isLeapYear(){
+            var year = parseInt(_input[0].value);
+            if((year%4==0)&&(year%100!=0)||(year%400==0)){
+                alert(year+'年是闰年');
+            }else{
+                alert(year+'年不是闰年');
+            }
+        };
+        function isFat(){
+            var height = parseInt(_input[1].value),
+                weight = parseInt(_input[2].value),
+                flag = weight-(height-108)*2;
+            if(flag>10){
+                alert('体重太重了，需要减肥！');
+            }else{
+                alert('体重太轻~');
+            }
+        };
+        function isTriangle(){
+            var a = parseInt(_input[3].value),
+                b = parseInt(_input[4].value),
+                c = parseInt(_input[5].value),
+                direction = (a+b>c)&&(a+c>b)&&(b+c>a)&&(Math.abs(a-b)<c)&&(Math.abs(a-c)<b)&&(Math.abs(b-c)<a);
+            if(direction){
+                alert('可以构成三角形');
+            }else{
+                alert('不能构成三角形');
+            }
+        };
+        function guessGame(){
+            var a = Math.floor(Math.random()*9+1),
+                b = Math.floor(Math.random()*9+1),
+                x = parseInt(_input[1].value),
+                y = parseInt(_input[2].value);
+            if(x==a&&y==b){
+                alert('中奖号：'+a+b+'；恭喜您，中奖了！￥1000');
+            }else if(x==b&&y==a){
+                alert('中奖号：'+a+b+'；顺序不对！￥300');
+            }else if(x==a||y==b||x==b||y==a){
+                alert('中奖号：'+a+b+'；只匹配成功一个数字！￥50');
+            }else{
+                alert('中奖号：'+a+b+'；抱歉，没有中奖');
+            }
+        };
+    </script>
+</head>
+<body>
+    <div>
+        <input type="text" />
+        <button onclick="ifBiggerThanTen()">问题1-1检测</button>
+        <button onclick="isOdd()">问题1-2检测</button>
+        <button onclick="isPlus()">问题1-3检测</button>        
+        <button onclick="isLeapYear()">问题1-7检测</button>
+    </div>
+    <hr />
+    <div>
+        <input type="text" />
+        <input type="text" />
+        <button onclick="getAbs()">问题1-3-1检测</button>
+        <button onclick="guessGame()">问题1-5检测</button>
+        <button onclick="isFat()">问题1-8检测</button>
+    </div>
+    <hr />
+    <div>
+        <input type="text" />
+        <input type="text" />
+        <input type="text" />
+        <button onclick="getMaxMin()">问题1-4检测</button>
+        <button onclick="isTriangle()">问题1-9检测</button>
+    </div>
+    <hr />
+    <div>
+        <input type="number" max="23" min="0" />
+        <input type="number" max="59" min="0" />
+        <input type="number" max="59" min="0" />
+        <button onclick="getNextTime()">问题1-6检测</button>
+    </div>
+</body>
+</html>
